@@ -3,7 +3,7 @@
 FROM mhart/alpine-node
 MAINTAINER Alexandre Andrade <kaniabi@gmail.com>
 
-ENV WORKDIR="/usr/src/app" HUBOT_NAME="gir" HUBOT_PORT="8072" HUBOT_ADAPTER="slack" HUBOT_SLACK_BOTNAME="${HUBOT_NAME}" PORT="HUBOT_PORT"
+ENV WORKDIR="/usr/src/app" HUBOT_NAME="gir" HUBOT_ADAPTER="slack" HUBOT_SLACK_BOTNAME="${HUBOT_NAME}" PORT="HUBOT_PORT"
 WORKDIR ${WORKDIR}
 ADD . ${WORKDIR}
 
@@ -14,6 +14,6 @@ RUN apk add --no-cache tzdata \
   && echo ${TIMEZONE} > /etc/timezone \
   && apk del tzdata
 
-EXPOSE $HUBOT_PORT
+EXPOSE 8072
 
 CMD bin/hubot --adapter ${HUBOT_ADAPTER}
