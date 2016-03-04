@@ -12,5 +12,5 @@ latest:
 	sudo docker tag $(NAME):$(VERSION) $(NAME):latest
 
 release: latest
-    git tag ${VERSION}
-    git push origin --tags
+	git tag ${VERSION}
+	git push origin --tags
