@@ -1,5 +1,5 @@
 NAME = kaniabi/hubot
-VERSION = 1.6
+VERSION = 1.0rc1
 
 .PHONY: all build test latest release
 
@@ -12,5 +12,5 @@ latest:
 	sudo docker tag $(NAME):$(VERSION) $(NAME):latest
 
 release: latest
-	@if ! sudo docker images $(NAME) | awk '{ print $$2 }' | grep -q -F $(VERSION); then echo "$(NAME) version $(VERSION) is not yet built. Please run 'make build'"; false; fi
-	sudo docker push $(NAME)
+    git tag ${VERSION}
+    git push origin --tags
