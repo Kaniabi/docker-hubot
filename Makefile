@@ -1,5 +1,5 @@
 NAME = kaniabi/hubot
-VERSION = 1.0rc1
+VERSION = 1.0rc2
 
 .PHONY: all build test latest release
 

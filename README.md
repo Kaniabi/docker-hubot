@@ -1,6 +1,6 @@
 [![Docker Stars](https://img.shields.io/docker/stars/kaniabi/hubot.svg?style=flat-square)](https://hub.docker.com/r/kaniabi/hubot/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/kaniabi/hubot.svg?style=flat-square)](https://hub.docker.com/r/kaniabi/hubot/)
-[![ImageLayers Size](https://img.shields.io/imagelayers/image-size/kaniabi/hubot/latest.svg?style=flat-square)](https://hub.docker.com/r/kaniabi/hubot/)
+[![ImageLayers Size](https://badge.imagelayers.io/kaniabi/hubot:latest.svg)](https://imagelayers.io/?images=kaniabi/hubot:latest)
 
 # Hubot on Docker
 
