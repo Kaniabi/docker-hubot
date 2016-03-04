@@ -14,6 +14,6 @@ RUN apk add --no-cache tzdata \
   && echo ${TIMEZONE} > /etc/timezone \
   && apk del tzdata
 
-EXPOSE ${HUBOT_PORT}
+EXPOSE $HUBOT_PORT
 
 CMD bin/hubot --adapter ${HUBOT_ADAPTER}
