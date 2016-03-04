@@ -1,38 +1,46 @@
 # Hubot on Docker
 
-This is the base docker-image for [hubot](https://hubot.github.com/) instances.
+This is ready for production docker-image for [hubot](https://hubot.github.com/)
+instances.
 
-Create your derived docker-image with the following `Dockerfile`:
+Execute it anywhere with your custom options. Note the dependency to a
+[redis](http://redis.io/) server:
 
-```docker
-# DOCKER-VERSION 1.6.2
+```
+$ docker run --rm --name redis \
+  -p 6379:6379 \
+  -v /opt/redis:/var/redis \
+  smebberson/alpine-redis
 
-FROM kaniabi/hubot
-MAINTAINER XXXX, xxxx@xxxx.xxx
-
-ENV HUBOT_PORT 8072
-ENV HUBOT_ADAPTER slack
-ENV HUBOT_NAME hubot
-ENV HUBOT_GOOGLE_API_KEY xxxxxxxxxxxxxxxxxxxxxx
-ENV HUBOT_SLACK_TOKEN xxxxxxxxxxxxxxxxxxxxxx
-ENV HUBOT_SLACK_TEAM xxxxx
-ENV HUBOT_SLACK_BOTNAME ${HUBOT_NAME}
-ENV PORT ${HUBOT_PORT}
-
-EXPOSE ${HUBOT_PORT}
-
-CMD bin/hubot --adapter slack
+$ docker run --rm --name hubot \
+  --link redis.service:redis \
+  -e "REDIS_URL=redis://redis:6379=" \
+  -e "HUBOT_NAME=<your bot name>" \
+  -e "HUBOT_SLACK_TEAM=<your team name>" \
+  -e "HUBOT_SLACK_TOKEN=<your slack token>" \
+  kaniabi/hubot:latest
 ```
 
-# TODO:
+You can also use Unit files that will look like this:
 
-Dockerfile for configuring [kaniabi/hubot](https://registry.hub.docker.com/u/kaniabi/hubot/).
+```
+[Unit]
+Description=Hubot bot
+After=docker.service
+Requires=docker.service
 
-## Deployment Steps
+[Service]
+# Make sure we have the image latest version
+ExecStartPre=-/usr/bin/docker pull kaniabi/hubot:latest
+ExecStop=/usr/bin/docker stop -t 3 %n
+ExecStart=/usr/bin/docker run --rm --name %n \
+  --link redis.service:redis \
+  -e "REDIS_URL=redis://redis:6379=" \
+  -e "HUBOT_NAME=<your bot name>" \
+  -e "HUBOT_SLACK_TEAM=<your team name>" \
+  -e "HUBOT_SLACK_TOKEN=<your slack token>" \
+  kaniabi/hubot:latest
 
-1. `docker pull kaniabi/hubot`
-2. `git clone git@github.com:kaniabi/bot-cfg.git`
-3. `vi ./bot-cfg/Dockerfile` (configure `ENV`s)
-4. `docker build -t="kaniabi/hubot:live" ./bot-cfg/`
-5. `docker run -d -p PORT kaniabi/hubot:live`
-6. Add public Hubot address to Slack Integration (i.e. http://2.2.2.2:45678/)
+[X-Fleet]
+X-ConditionMachineOf=redis.service
+```
