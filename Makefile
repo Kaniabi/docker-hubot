@@ -6,11 +6,8 @@ VERSION = 1.0rc1
 all: build
 
 build:
-	sudo docker build -t $(NAME):$(VERSION) .
+	sudo docker build -t $(NAME):$(VERSION) -t $(NAME):latest .
 
-latest:
-	sudo docker tag $(NAME):$(VERSION) $(NAME):latest
-
-release: latest
+release:
 	git tag ${VERSION}
 	git push origin --tags
