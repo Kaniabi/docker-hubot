@@ -1,7 +1,7 @@
 # DOCKER-VERSION    1.6.2
 
 FROM mhart/alpine-node
-MAINTAINER Alexandre Andrade, kaniabi@gmail.com
+MAINTAINER Alexandre Andrade <kaniabi@gmail.com>
 
 ENV WORKDIR="/usr/src/app" HUBOT_NAME="gir" HUBOT_PORT="8072" HUBOT_ADAPTER="slack" HUBOT_SLACK_BOTNAME="${HUBOT_NAME}" PORT="HUBOT_PORT"
 WORKDIR ${WORKDIR}
@@ -17,4 +17,3 @@ RUN apk add --no-cache tzdata \
 EXPOSE ${HUBOT_PORT}
 
 CMD bin/hubot --adapter ${HUBOT_ADAPTER}
-
