@@ -1,5 +1,5 @@
 NAME = kaniabi/hubot
-VERSION = 1.0rc2
+VERSION = 1.0rc3
 
 .PHONY: all build test latest release
 
@@ -10,4 +10,5 @@ build:
 
 release:
 	git tag ${VERSION}
+	git push origin
 	git push origin --tags
